@@ -1,7 +1,7 @@
 {
-  "name": "ah-openrecord",
+  "name": "ah-openrecord-plugin",
   "version": "0.0.1",
-  "description": "OpenRecord initializer for actionhero",
+  "description": "OpenRecord plugin for actionhero",
   "keywords": [
     "orm",
     "record",
