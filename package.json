@@ -1,0 +1,34 @@
+{
+  "name": "ah-openrecord",
+  "version": "0.0.1",
+  "description": "OpenRecord initializer for actionhero",
+  "keywords": [
+    "orm",
+    "record",
+    "sql",
+    "sqlite3",
+    "postgres",
+    "pg",
+    "mysql",
+    "database",
+    "activerecord",
+		"actionhero"
+  ],
+  "author": {
+    "name": "Philipp Waldmann",
+    "email": "philipp.waldmann@s-team.at"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/PhilWaldmann/ah-openrecord.git"
+  },
+  "dependencies": {
+    "openrecord": "latest"
+  },
+	"scripts": {
+	  "postinstall": "scripts/postinstall.js"
+	},
+  "engines": {
+    "node": ">=0.8.7"
+  }
+}
