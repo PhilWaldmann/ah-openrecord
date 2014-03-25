@@ -1,4 +1,4 @@
-Actionhero OpenRecord initializer
+[Actionhero](http://actionherojs.com/) [OpenRecord](https://github.com/PhilWaldmann/openrecord) initializer
 =============
 
 * be sure to enable the plugin within actionhero (config/api.js)
