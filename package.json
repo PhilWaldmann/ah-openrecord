@@ -1,6 +1,6 @@
 {
   "name": "ah-openrecord-plugin",
-  "version": "0.0.1",
+  "version": "0.1.2",
   "description": "OpenRecord plugin for actionhero",
   "keywords": [
     "orm",
@@ -12,7 +12,7 @@
     "mysql",
     "database",
     "activerecord",
-		"actionhero"
+    "actionhero"
   ],
   "author": {
     "name": "Philipp Waldmann",
@@ -25,10 +25,17 @@
   "dependencies": {
     "openrecord": "latest"
   },
-	"scripts": {
-	  "postinstall": "scripts/postinstall.js"
-	},
+  "scripts": {
+    "postinstall": "scripts/postinstall.js"
+  },
   "engines": {
     "node": ">=0.8.7"
-  }
+  },
+  "readme": "[Actionhero](http://actionherojs.com/) [OpenRecord](https://github.com/PhilWaldmann/openrecord) initializer\n=============\n\n* be sure to enable the plugin within actionhero (config/api.js)\n* you will need to add the ah-openrecord-plugin package (npm install ah-openrecord-plugin --save) to your package.json\n\nconfigure your database connection via `config/database.js`\n",
+  "readmeFilename": "README.md",
+  "bugs": {
+    "url": "https://github.com/PhilWaldmann/ah-openrecord/issues"
+  },
+  "_id": "ah-openrecord-plugin@0.1.2",
+  "_from": "ah-openrecord-plugin@>=0.1.x"
 }
