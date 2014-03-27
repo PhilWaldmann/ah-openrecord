@@ -12,12 +12,27 @@ exports.resource = function(api, next){
     config.actions = config.actions || Object.keys(templates);
     config.action = config.action || path.basename(current_file, '.js');
                 
-    for(var i = 0;i < config.actions.length; i++){
+    for(var i = 0; i < config.actions.length; i++){
       var action = config.actions[i];
       if(templates[action]){
         actions[action] = templates[action](model, config);
+        
+        if(config.requireAuth !== undefined) action[action].requireAuth = config.requireAuth;
+        if(config.requireRole !== undefined) action[action].requireRole = config.requireRole;
       }
     }
+    
+    
+    if(config.custom){
+      if(!(config.custom instanceof Array)) config.custom = [config.custom];
+      for(var i = 0; i < config.custom.length; i++){
+        var action = config.custom[i];
+        if(action.name){
+          actions[action.name] = action;
+        }
+      }
+    }
+    
     
     return actions;
   };
