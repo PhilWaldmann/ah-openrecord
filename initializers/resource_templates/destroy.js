@@ -13,7 +13,7 @@ module.exports = function(model, options){
     run: function(api, connection, next){
       var Model = api.db.Model(model);
       
-      var record = Model.find(connection.params.id, function(record){
+      var record = Model.setContext(connection).find(connection.params.id, function(record){
         record.destroy(function(res){
           connection.response.success = res;
           connection.response.errors = this.errors;

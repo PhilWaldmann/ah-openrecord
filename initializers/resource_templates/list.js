@@ -16,7 +16,7 @@ module.exports = function(model, options){
         
         var params = connection.params;
         
-        var chain = Model.chain();
+        var chain = Model.chain().setContext(connection);
 
         if (params['limit'] || params['offset']){
           var limit = params['limit'] || 100;
@@ -39,7 +39,7 @@ module.exports = function(model, options){
         }
         
         chain.exec(function(res){
-          connection.response.data = res.toJson();
+          connection.response.data = res ? res.toJson() : [];
           next(connection, true);
         });
       }
