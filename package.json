@@ -1,6 +1,6 @@
 {
   "name": "ah-openrecord-plugin",
-  "version": "0.1.3",
+  "version": "0.3.0",
   "description": "OpenRecord plugin for actionhero",
   "keywords": [
     "orm",
@@ -35,7 +35,5 @@
   "readmeFilename": "README.md",
   "bugs": {
     "url": "https://github.com/PhilWaldmann/ah-openrecord/issues"
-  },
-  "_id": "ah-openrecord-plugin@0.1.2",
-  "_from": "ah-openrecord-plugin@>=0.1.x"
+  }
 }

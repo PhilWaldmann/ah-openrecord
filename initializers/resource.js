@@ -15,10 +15,13 @@ exports.resource = function(api, next){
     for(var i = 0; i < config.actions.length; i++){
       var action = config.actions[i];
       if(templates[action]){
-        actions[action] = templates[action](model, config);
+        var act = templates[action](model, config);
         
-        if(config.requireAuth !== undefined) action[action].requireAuth = config.requireAuth;
-        if(config.requireRole !== undefined) action[action].requireRole = config.requireRole;
+        if(typeof act === 'object'){
+          actions[action] = act;
+          if(config.requireAuth !== undefined) actions[action].requireAuth = config.requireAuth;
+          if(config.requireRole !== undefined) actions[action].requireRole = config.requireRole;
+        }
       }
     }
     
@@ -32,8 +35,7 @@ exports.resource = function(api, next){
         }
       }
     }
-    
-    
+            
     return actions;
   };
   

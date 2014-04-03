@@ -1,5 +1,5 @@
 module.exports = function(model, options){
-  return {
+  var action = {
     name: options.action + ':destroy',
     
     description: 'Destroys a record',
@@ -12,14 +12,27 @@ module.exports = function(model, options){
     
     run: function(api, connection, next){
       var Model = api.db.Model(model);
+      var chain = Model.setContext(connection);
       
-      var record = Model.setContext(connection).find(connection.params.id, function(record){
+      if(options.scope){
+        if(!(options.scope instanceof Array)) options.scope = [options.scope];
+        for(var i = 0; i < options.scope.length; i++){
+          var scope = options.scope[i];
+          if(typeof chain[scope] === 'function'){
+            chain[scope](params);
+          }
+        }
+      }
+      
+      chain.find(connection.params.id, function(record){
         record.destroy(function(res){
           connection.response.success = res;
-          connection.response.errors = this.errors;
+          connection.response.error = this.errors;
           next(connection, true);
         });
       });
     }
-  };
+  };  
+
+  return this.mergeConfig(action, options.destroy);
 }

@@ -1,5 +1,5 @@
 module.exports = function(model, options){
-  return {
+  var action = {
     name: options.action + ':get',
     
     description: 'Returns a record',
@@ -12,12 +12,25 @@ module.exports = function(model, options){
     
     run: function(api, connection, next){
       var Model = api.db.Model(model);
+      var chain = Model.setContext(connection);
       
-      Model.setContext(connection).find(connection.params.id).asJson().exec(function(res){
+      if(options.scope){
+        if(!(options.scope instanceof Array)) options.scope = [options.scope];
+        for(var i = 0; i < options.scope.length; i++){
+          var scope = options.scope[i];
+          if(typeof chain[scope] === 'function'){
+            chain[scope](params);
+          }
+        }
+      }
+      
+      chain.find(connection.params.id).exec(function(res){
         connection.response.success = !!res;
-        connection.response.data = res;
+        connection.response.data = res ? res.toJson() : null;
         next(connection, true);
       });
     }
   };
+  
+  return this.mergeConfig(action, options.get);
 }

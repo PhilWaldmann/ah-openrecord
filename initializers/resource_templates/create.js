@@ -1,5 +1,5 @@
 module.exports = function(model, options){
-  return {
+  var action = {
     name: options.action + ':create',
     
     description: 'Creates a new record',
@@ -15,10 +15,12 @@ module.exports = function(model, options){
       
       Model.setContext(connection).create(connection.params.data, function(res){
         connection.response.success = res;
-        connection.response.errors = this.errors;
+        connection.response.error = this.errors;
         connection.response.data = this.toJson();
         next(connection, true);
       });
     }
   };
+
+  return this.mergeConfig(action, options.create);
 }
