@@ -1,6 +1,8 @@
 var path = require('path');
 var templates = require('./resource_templates');
 
+global.RECORD_NOT_FOUND = 'record not found';
+
 exports.resource = function(api, next){
   var current_file;
   

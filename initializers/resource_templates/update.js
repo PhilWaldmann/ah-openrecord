@@ -19,19 +19,25 @@ module.exports = function(model, options){
         for(var i = 0; i < options.scope.length; i++){
           var scope = options.scope[i];
           if(typeof chain[scope] === 'function'){
-            chain[scope](params);
+            chain[scope](connection.params);
           }
         }
       }
       
       chain.find(connection.params.id, function(record){
-        record.set(connection.params.data);
-        record.save(function(res){
-          connection.response.success = res;
-          connection.response.error = this.errors;
-          connection.response.data = this.toJson();
+        if(record){
+          record.set(connection.params.data);
+          record.save(function(res){
+            connection.response.success = res;
+            connection.response.error = this.errors;
+            connection.response.data = this.toJson();
+            next(connection, true);
+          });
+        }else{
+          connection.response.success = false;
+          connection.error = {base:[RECORD_NOT_FOUND]};
           next(connection, true);
-        });
+        }
       });
     }
   } 

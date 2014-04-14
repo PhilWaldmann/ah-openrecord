@@ -19,17 +19,23 @@ module.exports = function(model, options){
         for(var i = 0; i < options.scope.length; i++){
           var scope = options.scope[i];
           if(typeof chain[scope] === 'function'){
-            chain[scope](params);
+            chain[scope](connection.params);
           }
         }
       }
       
       chain.find(connection.params.id, function(record){
-        record.destroy(function(res){
-          connection.response.success = res;
-          connection.response.error = this.errors;
-          next(connection, true);
-        });
+        if(record){
+          record.destroy(function(res){
+            connection.response.success = res;
+            connection.response.error = this.errors;
+            next(connection, true);
+          });
+        }else{
+          connection.response.success = false;
+          connection.error = {base:[RECORD_NOT_FOUND]};
+          next(connection, true);          
+        }
       });
     }
   };  

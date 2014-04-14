@@ -19,7 +19,7 @@ module.exports = function(model, options){
         for(var i = 0; i < options.scope.length; i++){
           var scope = options.scope[i];
           if(typeof chain[scope] === 'function'){
-            chain[scope](params);
+            chain[scope](connection.params);
           }
         }
       }
