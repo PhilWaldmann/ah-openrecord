@@ -30,13 +30,23 @@ module.exports = function(model, options){
             connection.response.success = res;
             connection.response.error = this.errors;
             next(connection, true);
-          });
+          })/*.catch(function(err){
+            connection.error = 'internal error';
+            connection.response.success = false;
+            connection.response.data = {};
+            next(connection, true);
+          });*/
         }else{
           connection.response.success = false;
           connection.error = {base:[RECORD_NOT_FOUND]};
           next(connection, true);          
         }
-      });
+      })/*.catch(function(err){
+        connection.error = 'internal error';
+        connection.response.success = false;
+        connection.response.data = {};
+        next(connection, true);
+      });*/
     }
   };  
 
