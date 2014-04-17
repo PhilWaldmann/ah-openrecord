@@ -5,7 +5,7 @@ module.exports = function(model, options){
     description: 'Returns a list of records',
     inputs: {
       required: [],
-      optional: ['limit', 'offset', 'sort', 'filter']
+      optional: ['limit', 'offset', 'sort', 'filter', 'query']
     },
     outputExample: {},
     
