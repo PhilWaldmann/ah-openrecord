@@ -31,11 +31,11 @@ module.exports = function(model, options){
         connection.response.data = res;
         next(connection, true);
         
-      })/*.catch(function(err){
+      }).catch(function(err){
         connection.error = 'internal error';
         connection.response.data = [];
         next(connection, true);
-      });*/
+      });
     }
   };
     

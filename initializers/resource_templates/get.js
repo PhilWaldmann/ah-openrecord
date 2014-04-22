@@ -28,12 +28,12 @@ module.exports = function(model, options){
         connection.response.success = !!res;
         connection.response.data = res ? res.toJson() : null;
         next(connection, true);
-      })/*.catch(function(err){
+      }).catch(function(err){
         connection.error = 'internal error';
         connection.response.success = false;
         connection.response.data = {};
         next(connection, true);
-      });*/
+      });
     }
   };
   

@@ -32,23 +32,23 @@ module.exports = function(model, options){
             connection.response.error = this.errors;
             connection.response.data = this.toJson();
             next(connection, true);
-          })/*.catch(function(err){
+          }).catch(function(err){
             connection.error = 'internal error';
             connection.response.success = false;
             connection.response.data = {};
             next(connection, true);
-          });*/
+          });
         }else{
           connection.response.success = false;
           connection.error = {base:[RECORD_NOT_FOUND]};
           next(connection, true);
         }
-      })/*.catch(function(err){
+      }).catch(function(err){
         connection.error = 'internal error';
         connection.response.success = false;
         connection.response.data = {};
         next(connection, true);
-      });*/
+      });
     }
   } 
 
