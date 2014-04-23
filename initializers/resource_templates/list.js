@@ -1,6 +1,7 @@
 module.exports = function(model, options){  
   var action = {
     name: options.action + ':list',
+    route: {get: options.action.replace(':', '/')},
     
     description: 'Returns a list of records',
     inputs: {
@@ -24,7 +25,8 @@ module.exports = function(model, options){
           }
         }
       }      
-                
+      
+            
       chain.exec(function(res){
         res = res ? res : [];
         if(res.toJson) res = res.toJson();
@@ -32,12 +34,14 @@ module.exports = function(model, options){
         next(connection, true);
         
       }).catch(function(err){
-        connection.error = 'internal error';
+        api.logger.error(err);
+        connection.error = api.config.general.serverErrorMessage;
         connection.response.data = [];
         next(connection, true);
       });
     }
   };
-    
+  
+  action = this.mergeConfig(action, options.defaults)  
   return this.mergeConfig(action, options.list);
 }

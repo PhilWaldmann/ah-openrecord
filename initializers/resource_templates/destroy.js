@@ -1,6 +1,7 @@
 module.exports = function(model, options){
   var action = {
     name: options.action + ':destroy',
+    route: {delete: options.action.replace(':', '/') + '/:id'},
     
     description: 'Destroys a record',
     inputs: {
@@ -31,7 +32,8 @@ module.exports = function(model, options){
             connection.response.error = this.errors;
             next(connection, true);
           }).catch(function(err){
-            connection.error = 'internal error';
+            api.logger.error(err);
+            connection.error = api.config.general.serverErrorMessage;
             connection.response.success = false;
             connection.response.data = {};
             next(connection, true);
@@ -42,13 +44,15 @@ module.exports = function(model, options){
           next(connection, true);          
         }
       }).catch(function(err){
-        connection.error = 'internal error';
+        api.logger.error(err);
+        connection.error = api.config.general.serverErrorMessage;
         connection.response.success = false;
         connection.response.data = {};
         next(connection, true);
       });
     }
   };  
-
+  
+  action = this.mergeConfig(action, options.defaults)
   return this.mergeConfig(action, options.destroy);
 }

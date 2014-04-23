@@ -8,12 +8,21 @@ exports.resource = function(api, next){
   
   //global Resource method
   global.Resource = function(model, config){
+
     var actions = {};
+    var filename = path.basename(current_file, '.js');
     
     config = config || {};
+    
+    if(config.prefix){
+      filename = config.prefix + ':' + filename;
+    }
+    
+    
     config.actions = config.actions || Object.keys(templates);
-    config.action = config.action || path.basename(current_file, '.js');
-                
+    config.action = config.action || filename
+    
+    
     for(var i = 0; i < config.actions.length; i++){
       var action = config.actions[i];
       if(templates[action]){

@@ -1,6 +1,7 @@
 module.exports = function(model, options){
   var action = {
     name: options.action + ':get',
+    route: {get: options.action.replace(':', '/') + '/:id'},
     
     description: 'Returns a record',
     inputs: {
@@ -29,7 +30,8 @@ module.exports = function(model, options){
         connection.response.data = res ? res.toJson() : null;
         next(connection, true);
       }).catch(function(err){
-        connection.error = 'internal error';
+        api.logger.error(err);
+        connection.error = api.config.general.serverErrorMessage;
         connection.response.success = false;
         connection.response.data = {};
         next(connection, true);
@@ -37,5 +39,6 @@ module.exports = function(model, options){
     }
   };
   
+  action = this.mergeConfig(action, options.defaults)
   return this.mergeConfig(action, options.get);
 }
