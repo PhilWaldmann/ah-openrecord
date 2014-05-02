@@ -30,7 +30,7 @@ module.exports = function(model, options){
         connection.response.data = data;
         next(connection, true);
       }).catch(function(err){
-        api.logger.error(err);
+        api.log(err.stack, 'error');
         connection.error = api.config.general.serverErrorMessage;
         connection.response.success = false;
         connection.response.data = {};
