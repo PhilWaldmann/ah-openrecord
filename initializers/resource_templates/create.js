@@ -14,10 +14,20 @@ module.exports = function(model, options){
     run: function(api, connection, next){
       var Model = api.db.Model(model);
       
+      if(typeof options.before === 'function'){
+        options.before(connection.params, connection);
+      }
+      
       Model.setContext(connection).create(connection.params.data, function(res){
+        var data = this.toJson();
+        
+        if(typeof options.after === 'function'){
+          data = options.after(data, connection);
+        }
+        
         connection.response.success = res;
-        connection.response.error = this.errors;
-        connection.response.data = this.toJson();
+        if(!res) connection.response.error = this.errors;
+        connection.response.data = data;
         next(connection, true);
       }).catch(function(err){
         api.logger.error(err);

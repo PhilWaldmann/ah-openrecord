@@ -15,6 +15,10 @@ module.exports = function(model, options){
       var Model = api.db.Model(model);
       var chain = Model.setContext(connection);
       
+      if(typeof options.before === 'function'){
+        options.before(connection.params, connection);
+      }
+      
       if(options.scope){
         if(!(options.scope instanceof Array)) options.scope = [options.scope];
         for(var i = 0; i < options.scope.length; i++){
@@ -26,8 +30,14 @@ module.exports = function(model, options){
       }
       
       chain.find(connection.params.id).exec(function(res){
+        var data = res ? res.toJson() : null
+
+        if(typeof options.after === 'function'){
+          data = options.after(data, connection);
+        }
+        
         connection.response.success = !!res;
-        connection.response.data = res ? res.toJson() : null;
+        connection.response.data = data;
         next(connection, true);
       }).catch(function(err){
         api.logger.error(err);

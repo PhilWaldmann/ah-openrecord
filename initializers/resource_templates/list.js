@@ -15,7 +15,11 @@ module.exports = function(model, options){
     
       var Model = api.db.Model(model);    
       var chain = Model.chain().setContext(connection);
-          
+      
+      if(typeof options.before === 'function'){
+        options.before(connection.params, connection);
+      }
+      
       if(options.scope){
         if(!(options.scope instanceof Array)) options.scope = [options.scope];
         for(var i = 0; i < options.scope.length; i++){
@@ -30,13 +34,20 @@ module.exports = function(model, options){
       chain.exec(function(res){
         res = res ? res : [];
         if(res.toJson) res = res.toJson();
+                
+        if(typeof options.after === 'function'){
+          res = options.after(res, connection);
+        }
+        
         connection.response.data = res;
+        connection.response.success = true;
         next(connection, true);
         
       }).catch(function(err){
         api.logger.error(err);
         connection.error = api.config.general.serverErrorMessage;
         connection.response.data = [];
+        connection.response.success = false;
         next(connection, true);
       });
     }
