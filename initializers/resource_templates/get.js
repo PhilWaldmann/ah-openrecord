@@ -29,6 +29,7 @@ module.exports = function(model, options){
         }
       }
       
+      connection.params.id = connection.params.id.split(',');
       chain.find(connection.params.id).exec(function(res){
         var data = res ? res.toJson() : null
 
