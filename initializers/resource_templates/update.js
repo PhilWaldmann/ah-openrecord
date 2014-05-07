@@ -44,7 +44,7 @@ module.exports = function(model, options){
             connection.response.data = data;
             next(connection, true);
           }).catch(function(err){
-            api.log(err.stack, 'error');
+            api.log(err.stack || err, 'error');
             connection.error = api.config.general.serverErrorMessage;
             connection.response.success = false;
             connection.response.data = {};
@@ -56,7 +56,7 @@ module.exports = function(model, options){
           next(connection, true);
         }
       }).catch(function(err){
-        api.log(err.stack, 'error');
+        api.log(err.stack || err, 'error');
         connection.error = api.config.general.serverErrorMessage;
         connection.response.success = false;
         connection.response.data = {};

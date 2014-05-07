@@ -29,7 +29,8 @@ module.exports = function(model, options){
         }
       }
       
-      connection.params.id = connection.params.id.split(',');
+      if(typeof connection.params.id == 'string') connection.params.id = connection.params.id.split(',');
+      
       chain.find(connection.params.id).exec(function(res){
         var data = res ? res.toJson() : null
 
@@ -41,7 +42,7 @@ module.exports = function(model, options){
         connection.response.data = data;
         next(connection, true);
       }).catch(function(err){
-        api.log(err.stack, 'error');
+        api.log(err.stack || err, 'error');
         connection.error = api.config.general.serverErrorMessage;
         connection.response.success = false;
         connection.response.data = {};
