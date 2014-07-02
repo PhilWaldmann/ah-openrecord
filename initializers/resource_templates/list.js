@@ -40,13 +40,17 @@ module.exports = function(model, options){
             
       chain.exec(function(res){
         res = res ? res : [];
-        if(res.toJson) res = res.toJson();
+        
+        if(res.toJson){
+          res = res.toJson();
+        }
                 
         if(typeof options.after === 'function'){
           res = options.after(res, connection);
         }
         
         connection.response.data = res;
+        connection.response.totalCount = chain.$totalCount;;
         connection.response.success = true;
         next(connection, true);
         
