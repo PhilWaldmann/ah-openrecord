@@ -30,6 +30,13 @@ module.exports = function(model, options){
         }
       }      
       
+      if(options.totalCount !== false){
+        chain.include(':totalCount');
+      }
+      
+      if(options.asJson !== false){
+        chain.asJson();
+      }
             
       chain.exec(function(res){
         res = res ? res : [];
