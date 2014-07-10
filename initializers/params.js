@@ -1,6 +1,6 @@
 exports.params = function(api, next){
 
-  api.actions.preProcessors.push(function(connection, actionTemplate, next){
+  api.actions.addPreProcessor(function(connection, actionTemplate, next){
     var params = connection.params;
     
     for(var name in params){

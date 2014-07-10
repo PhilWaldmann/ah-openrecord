@@ -42,8 +42,8 @@ module.exports = function(model, options){
         connection.response.data = data;
         next(connection, true);
       }).catch(function(err){
-        api.log(err.stack || err, 'error');
-        connection.error = api.config.general.serverErrorMessage;
+        api.log(err.toString() + '\n' + (err.stack ? err.stack : 'NO STACK'), 'error');
+        connection.error = api.config.errors.serverErrorMessage();
         connection.response.success = false;
         connection.response.data = {};
         next(connection, true);

@@ -1,7 +1,6 @@
 var path = require('path');
 var templates = require('./resource_templates');
 
-global.RECORD_NOT_FOUND = 'record not found';
 
 exports.resource = function(api, next){
   var current_file;
@@ -56,7 +55,7 @@ exports.resource = function(api, next){
   if(api.config.general.paths.resource){
     
     api.config.general.paths.resource.forEach(function(p){
-      api.utils.recusiveDirecotryGlob(p).forEach(function(f){
+      api.utils.recursiveDirectoryGlob(p).forEach(function(f){
         current_file = f;
         api.actions.loadFile(f);
       });

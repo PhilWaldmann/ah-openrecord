@@ -6,7 +6,7 @@ module.exports = function(model, options){
     description: 'Returns a list of records',
     inputs: {
       required: [],
-      optional: ['limit', 'offset', 'sort', 'filter', 'query']
+      optional: ['limit', 'start', 'sort', 'filter', 'query']
     },
     outputExample: {},
     
@@ -50,13 +50,13 @@ module.exports = function(model, options){
         }
         
         connection.response.data = res;
-        connection.response.totalCount = chain.$totalCount;;
+        connection.response.totalCount = chain.$totalCount;
         connection.response.success = true;
         next(connection, true);
         
       }).catch(function(err){
-        api.log(err.stack || err, 'error');
-        connection.error = api.config.general.serverErrorMessage;
+        api.log(err.toString() + '\n' + (err.stack ? err.stack : 'NO STACK'), 'error');
+        connection.error = api.config.errors.serverErrorMessage();
         connection.response.data = [];
         connection.response.success = false;
         next(connection, true);

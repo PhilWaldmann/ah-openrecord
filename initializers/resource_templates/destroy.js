@@ -36,20 +36,20 @@ module.exports = function(model, options){
             if(!res) connection.response.error = this.errors;
             next(connection, true);
           }).catch(function(err){
-            api.log(err.stack || err, 'error');
-            connection.error = api.config.general.serverErrorMessage;
+            api.log(err.toString() + '\n' + (err.stack ? err.stack : 'NO STACK'), 'error');
+            connection.error = api.config.errors.serverErrorMessage();
             connection.response.success = false;
             connection.response.data = {};
             next(connection, true);
           });
         }else{
           connection.response.success = false;
-          connection.error = {base:[RECORD_NOT_FOUND]};
+          connection.error = {base:[api.config.errors.recordNotFound()]};
           next(connection, true);          
         }
       }).catch(function(err){
-        api.log(err.stack || err, 'error');
-        connection.error = api.config.general.serverErrorMessage;
+        api.log(err.toString() + '\n' + (err.stack ? err.stack : 'NO STACK'), 'error');
+        connection.error = api.config.errors.serverErrorMessage();
         connection.response.success = false;
         connection.response.data = {};
         next(connection, true);
