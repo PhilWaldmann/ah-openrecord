@@ -44,7 +44,7 @@ module.exports = function(model, options){
           });
         }else{
           connection.response.success = false;
-          connection.error = {base:[api.config.errors.recordNotFound()]};
+          connection.error = api.config.errors.recordNotFound();
           next(connection, true);          
         }
       }).catch(function(err){
