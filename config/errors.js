@@ -3,11 +3,8 @@
 exports.default = {
   errors: function(api){
     return {
-      '_toExpand': true,
-      
-      recordNotFound: function(){
-        return 'record not found';
-      } 
+            
+      recordNotFound: 'record not found'
       
     }
   }

@@ -4,7 +4,7 @@ exports.database = function(api, next){
 
   api.config.database.logger = api.logger;  
   api.logger.trace = function(){};
-  
+    
   api.db = new OpenRecord(api.config.database);
   api.db.ready(next);
   
