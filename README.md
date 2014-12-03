@@ -38,4 +38,9 @@ module.exports = Resource('User', {
 * `prefix`: Action name prefix. `prefix: 'admin'` will create action `admin:user:list` 
 * `requireAuth`: Boolean. Is authentication required or not (will behandled by identity plugin)
 * `requireRole`: String. What role do you need to call that actions (will behandled by identity plugin)
+* `afterFind`: Function. Like an actionhero action - but will be called after find (api, connection, next)
+* `afterGet`: Function. Like an actionhero action - but will be called after get (api, connection, next)
+* `afterUpdate`: Function. Like an actionhero action - but will be called after update (api, connection, next)
+* `afterCreate`: Function. Like an actionhero action - but will be called after create (api, connection, next)
+* `afterDestroy`: Function. Like an actionhero action - but will be called after destroy (api, connection, next)
 * `custom`: Array of custom actionhero actions
