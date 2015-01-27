@@ -1,6 +1,6 @@
 {
   "name": "ah-openrecord-plugin",
-  "version": "2.1.0",
+  "version": "2.1.2",
   "description": "OpenRecord plugin for actionhero",
   "keywords": [
     "orm",
