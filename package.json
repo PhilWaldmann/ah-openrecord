@@ -25,6 +25,9 @@
   "dependencies": {
     "openrecord": "latest"
   },
+  "peerDependencies": {
+    "actionhero": ">9.x.x"
+  },
   "scripts": {
     "postinstall": "scripts/postinstall.js"
   },

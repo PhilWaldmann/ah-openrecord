@@ -1,7 +1,8 @@
-exports.params = function(api, next){
-
-  api.actions.addPreProcessor(function(connection, actionTemplate, next){
-    var params = connection.params;
+var openrecordParamsMiddleware = {
+  name: 'ah-openrecord-plugin params Middleware',
+  global: true,
+  preProcessor: function(data, next){
+    var params = data.connection.params;
     
     for(var name in params){
       if(params.hasOwnProperty(name)){
@@ -11,7 +12,7 @@ exports.params = function(api, next){
           var elements = match[2].split('][');
           elements.unshift(match[1]); //base name
           elements.push(params[name]); //value
-
+    
           applyToObject(params, elements);
       
           delete params[name];          
@@ -19,11 +20,16 @@ exports.params = function(api, next){
       }
     }
     
-    next(connection, true);
-  });
-  
-  next();
-  
+    next();
+  }
+};
+
+
+module.exports = {
+  initialize: function(api, next){
+    api.actions.addMiddleware(openrecordParamsMiddleware);    
+    next();
+  }
 };
 
 
