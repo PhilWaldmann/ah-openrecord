@@ -15,8 +15,15 @@ module.exports = {
     api.db = new OpenRecord(api.config.database); 
     api.db.ready(next);
     
+    api.db.on('exception', function(err){
+      api.exceptionHandlers.report(err, 'database', api.config.database.type, {}, 'error');
+    });
+    
     //put a reference of the actionhero api into openrecord
     api.db.api = api;
     
+  },
+  stop: function(api, next){
+    api.db.close(next);
   }
 }
